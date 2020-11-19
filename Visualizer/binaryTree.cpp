@@ -62,43 +62,35 @@ BSTNode::BSTNode()
     treeSceneWidth=width;
  }
 
- void BST::draw(int key)
- {
-     this->Insert(key);
-//     if(this->root!=nullptr)
-//     {
-//         treeScene->addEllipse(QRectF(QPointF(treeSceneWidth/2,50),QPointF(treeSceneWidth/2+50,50+50)),QPen(QColor(0,0,0)),QBrush(QColor(255,255,255)));
-//         QGraphicsTextItem* text;
-//         text=treeScene->addText(QString::number(key),QFont("Times"));
-//         text->setPos(QPointF(treeSceneWidth/2+10,50+10));
+ void BST::draw(int key,int operation)
+  {
+      treeScene->clear();
+      if(operation==1)
+      {
+      this->Insert(key);
+          horizontalDistanceMultiplier++;
+      }
 
-//     }
-     double rectX1=treeSceneWidth/2;
-     double rectX2=treeSceneWidth/2+50;
-     double rectY1=50;
-     double rectY2=100;
-    recursiveDraw(this->root,key,rectX1,rectY1,rectX2,rectY2);
- }
+      double level=400;
+      recursiveDraw(this->root,200+horizontalDistanceMultiplier*30,50,level);
+  }
 
- void BST::recursiveDraw(BSTNode* node,int key,double x1,double y1,double x2,double y2)
+
+ void BST::recursiveDraw(BSTNode* node, double x1, double y1,double level)
  {
      if(node!=nullptr)
      {
-//         treeScene->addEllipse(QRectF(QPointF(x1,y1),QPointF(x2,y2)),QPen(QColor(0,0,0)),QBrush(QColor(255,255,255)));
-//         treeScene->addRect(QRectF(QPointF(x1,y1),QPointF(x2,y2)),QPen(QColor(0,0,0)),QBrush(QColor(255,255,255)));
-         QGraphicsTextItem* text;
-         text=treeScene->addText(QString::number(node->Key),QFont("Times"));
-         text->setPos(QPointF(x1+10,y1+10));
+                  level=level/2;
+                  QGraphicsTextItem* text;
+                  text=treeScene->addText(QString::number(node->Key),QFont("Times"));
+                  text->setPos(QPointF(x1,y1));
 
-     if(node->Key>key)
+         recursiveDraw(node->Left,x1-level,y1+100,level);
+         recursiveDraw(node->Right,x1+level,y1+100,level);
+     }
+     else
      {
-         recursiveDraw(node->Left,key,x1-100,y2+50,x1-120,y2+80);
+         return;
      }
-     else if(node->Key<key)
-     {
-         recursiveDraw(node->Right,key,x2+100,y2+50,x2+120,y2+80);
-     }
-     }
-
 
  }

@@ -29,9 +29,9 @@ public:
      BST();
     ~BST();
     void initializer(QGraphicsScene*,double,double);
-    void draw(int key);
+    void draw(int key,int operation);
     void Insert(int key);
-    void recursiveDraw(BSTNode*,int,double,double,double,double);
+    void recursiveDraw(BSTNode*,double,double,double);
 
 
 private:
@@ -40,6 +40,7 @@ private:
     BSTNode* Insert(BSTNode* node, int key);
     double treeSceneHeight;
     double treeSceneWidth;
+    int horizontalDistanceMultiplier=1;
 
 };
 
