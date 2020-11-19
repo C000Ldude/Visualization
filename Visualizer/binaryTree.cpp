@@ -81,9 +81,25 @@ BSTNode::BSTNode()
      if(node!=nullptr)
      {
                   level=level/2;
-                  QGraphicsTextItem* text;
-                  text=treeScene->addText(QString::number(node->Key),QFont("Times"));
-                  text->setPos(QPointF(x1,y1));
+                  QGraphicsTextItem text(QString::number(node->Key),nullptr);
+                  QRectF textRect;
+                  textRect=text.boundingRect();
+                  textRect.moveTo(QPointF(x1,y1));
+                  treeScene->addRect(textRect,QPen(QColor(0,0,0)),QBrush(QColor(255,255,255)));
+                  QGraphicsTextItem* textNumber;
+                  textNumber=treeScene->addText(QString::number(node->Key),QFont("Times"));
+                  textNumber->setPos(QPointF(x1,y1));
+                  if(node->Left!=nullptr)
+                  {
+                  treeScene->addLine(textRect.bottomLeft().x(),textRect.bottomLeft().y(),x1-level,y1+100,QPen(QColor(0,0,0)));
+                  }
+                  if(node->Right!=nullptr)
+                  {
+                  treeScene->addLine(textRect.bottomRight().x(),textRect.bottomRight().y(),x1+level,y1+100,QPen(QColor(0,0,0)));
+
+                  }
+
+
 
          recursiveDraw(node->Left,x1-level,y1+100,level);
          recursiveDraw(node->Right,x1+level,y1+100,level);
